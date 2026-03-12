@@ -1,0 +1,22 @@
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+exclude = [".venv", ".git", "__pycache__"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+# Enable isort rules for import sorting
+select = ["I"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-single-line = false
+lines-after-imports = 2
+
+[tool.pyright]
+reportAny = false
+reportImportCycles = false
