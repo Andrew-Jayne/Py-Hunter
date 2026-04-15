@@ -1,7 +1,7 @@
 [project]
 name = "py-hunter"
 version = "1.0.0"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 dependencies = []
 
 [project.scripts]
@@ -31,5 +31,6 @@ force-single-line = false
 lines-after-imports = 2
 
 [tool.pyright]
+exclude = ["tests"]
 reportAny = false
 reportImportCycles = false

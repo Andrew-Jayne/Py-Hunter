@@ -1,3 +1,4 @@
+# type: ignore
 items = [1, 2, 3, 4, 5]
 pairs = [("a", 1), ("b", 2)]
 mixed: list[int | None] = [1, None, 2, None, 3]

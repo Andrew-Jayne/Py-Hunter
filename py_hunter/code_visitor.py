@@ -66,7 +66,18 @@ class HunterNodeVisitor:
         yield from self.generic_visit(node)
 
     def visit_IfExp(self, node: ast.IfExp) -> Generator[HunterStyleCheck]:
-        yield from self._implicit_bool_check(node.test, CheckType.TERNARY)
+        unparsed = ast.unparse(node)
+        code = unparsed[:MAX_CODE_LENGTH] + (
+            "..." if len(unparsed) > MAX_CODE_LENGTH else ""
+        )
+        yield HunterStyleCheck(
+            file=self.filename,
+            line=node.lineno,
+            column=node.col_offset,
+            code=code,
+            context="Ternary expression - use explicit if/else block instead",
+            check_type=CheckType.TERNARY,
+        )
         yield from self.generic_visit(node)
 
     def visit_BoolOp(self, node: ast.BoolOp) -> Generator[HunterStyleCheck]:

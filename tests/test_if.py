@@ -1,3 +1,4 @@
+# type: ignore
 value = True
 other = False
 count: int = 5
