@@ -1,6 +1,7 @@
 .DS_Store
 */.DS_Store
 .claude
+tests/OLD_TESTS/
 
 
 # Byte-compiled / optimized / DLL files

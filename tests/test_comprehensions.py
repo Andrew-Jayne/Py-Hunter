@@ -1,45 +1,71 @@
-#!/usr/bin/env python3
-"""Test file to check what comprehension patterns are caught."""
+items = [1, 2, 3, 4, 5]
+pairs = [("a", 1), ("b", 2)]
+mixed: list[int | None] = [1, None, 2, None, 3]
 
-# List comprehensions with implicit boolean filters
-numbers = [1, 2, 0, 3, 0, 4]
-items = ["", "hello", None, "world", False]
 
-# These should be flagged (implicit boolean in filter)
-filtered1 = [x for x in numbers if x]  # implicit: if x
-filtered2 = [x for x in items if not x]  # implicit: if not x
-filtered3 = [x for x in items if x and len(x) > 2]  # implicit: if x and ...
+# -- list comp --
+result = [item for item in items]
 
-# These should NOT be flagged (explicit comparisons)
-filtered4 = [x for x in numbers if x > 0]  # explicit comparison
-filtered5 = [x for x in items if x is not None]  # explicit comparison
-filtered6 = [x for x in items if isinstance(x, str) is True]  # explicit with is True
+result: list[int] = []
+for item in items:
+    result.append(item)
 
-# Dict comprehensions
-data = {"a": 1, "b": 0, "c": 3, "d": None}
 
-# Should be flagged
-dict1 = {k: v for k, v in data.items() if v}  # implicit: if v
-dict2 = {k: v for k, v in data.items() if not v}  # implicit: if not v
+# -- set comp --
+unique = {item for item in items}
 
-# Should NOT be flagged
-dict3 = {k: v for k, v in data.items() if v is not None}  # explicit
-dict4 = {k: v for k, v in data.items() if v > 0}  # explicit comparison
+unique: set[int] = set()
+for item in items:
+    unique.add(item)
 
-# Set comprehensions
-set1 = {x for x in numbers if x}  # should be flagged
-set2 = {x for x in numbers if x != 0}  # should NOT be flagged
 
-# Generator expressions
-gen1 = (x for x in numbers if x)  # should be flagged
-gen2 = (x for x in numbers if x > 0)  # should NOT be flagged
+# -- dict comp --
+lookup = {key: val for key, val in pairs}
 
-# Nested comprehensions
-matrix = [[1, 0, 2], [0, 3, 0], [4, 0, 5]]
-nested1 = [[val for val in row if val] for row in matrix]  # inner if should be flagged
-nested2 = [[val for val in row if val > 0] for row in matrix]  # should NOT be flagged
+lookup = {}
+for key, val in pairs:
+    lookup[key] = val
 
-# Comprehensions without filters (these are NOT checked currently)
-simple_list = [x * 2 for x in numbers]  # no filter, not checked
-simple_dict = {k: v * 2 for k, v in data.items()}  # no filter, not checked
-simple_set = {x * 2 for x in numbers}  # no filter, not checked
+
+# -- generator --
+total = sum(item * 2 for item in items)
+
+total = 0
+for item in items:
+    total += item * 2
+
+
+# -- explicit if filter --
+filtered = [item for item in items if item > 0]
+
+filtered: list[int] = []
+for item in items:
+    if item > 0:
+        filtered.append(item)
+
+
+# -- implicit if filter --
+filtered = [item for item in mixed if item]
+
+filtered = []
+for item in mixed:
+    if item is not None:
+        filtered.append(item)
+
+
+# -- filter(None) --
+cleaned = list(filter(None, mixed))
+
+cleaned: list[int | None] = []
+for item in mixed:
+    if item is not None:
+        cleaned.append(item)
+
+
+# -- nested generators --
+nested = [item for item in items for other in items]
+
+nested: list[int] = []
+for item in items:
+    for other in items:
+        nested.append(item)

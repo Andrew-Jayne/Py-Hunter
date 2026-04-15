@@ -1,7 +1,7 @@
 from ast import parse
 from pathlib import Path
 
-from py_hunter.ast_node_hunter import HunterNodeVisitor
+from py_hunter.code_visitor import HunterNodeVisitor
 from py_hunter.constructs import HunterStyleCheck
 
 

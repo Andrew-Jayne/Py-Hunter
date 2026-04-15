@@ -1,4 +1,4 @@
-from py_hunter.ast_node_hunter.scanner import HunterStyleScanner
+from py_hunter.main import main
 
 
-__all__ = ["HunterStyleScanner"]
+__all__ = ["main"]
